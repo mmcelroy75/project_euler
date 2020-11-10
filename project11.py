@@ -50,6 +50,36 @@ arr = np.array([[8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77
 [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54],
 [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]])
 
+greatest_product = 0
+
+def iter_diag(array):
+
+    k_list = [i for i in range(-16, 17)]
+    idx_list = [i for i in range(4, 21)]
+    idx_list += idx_list[:-1][::-1]
+    diag_dict = {key:value for key, value in zip(k_list,idx_list)}
+
+    x = -16
+    checklist = []
+    #greatest_product = 0
+    while x <= 16:
+        y = 0
+        z = 4
+        while z <= diag_dict.get(x):
+            
+            #product3 = np.product(np.diag(array,k=x)[y:z])
+            sub_arr = np.diag(arr,k=x)[y:z]
+            checklist.append(sub_arr)
+            
+            y += 1
+            z += 1
+
+        x += 1
+    
+    return greatest_product, checklist
+
+print(iter_diag(arr))
+
 checklist = []
 
 greatest_product = 0
