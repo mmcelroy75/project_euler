@@ -50,9 +50,31 @@ arr = np.array([[8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77
 [20, 73, 35, 29, 78, 31, 90, 1, 74, 31, 49, 71, 48, 86, 81, 16, 23, 57, 5, 54],
 [1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48]])
 
+arr_rot90 = np.rot90(arr,1,axes=(1,0)) # axes=(1,0) rotates clockwise, default rotates counterclockwise.
+
 greatest_product = 0
 
+def iter_horizontal(array):
+
+    global greatest_product
+
+    for row in array:
+        m = 0
+        n = 4
+        while n <= 20:
+            product = np.product(row[m:n])
+            if product > greatest_product:
+                greatest_product = product
+            else:
+                pass
+
+            m += 1
+            n += 1
+
+
 def iter_diag(array):
+
+    global greatest_product
 
     k_list = [i for i in range(-16, 17)]
     idx_list = [i for i in range(4, 21)]
@@ -60,58 +82,30 @@ def iter_diag(array):
     diag_dict = {key:value for key, value in zip(k_list,idx_list)}
 
     x = -16
-    checklist = []
-    #greatest_product = 0
+
     while x <= 16:
         y = 0
         z = 4
         while z <= diag_dict.get(x):
             
-            #product3 = np.product(np.diag(array,k=x)[y:z])
-            sub_arr = np.diag(arr,k=x)[y:z]
-            checklist.append(sub_arr)
+            product2= np.product(np.diag(array,k=x)[y:z])
+
+            if product2 > greatest_product:
+                greatest_product = product2
+            else:
+                pass
             
             y += 1
             z += 1
 
         x += 1
     
-    return greatest_product, checklist
 
-print(iter_diag(arr))
-
-checklist = []
-
-greatest_product = 0
-
-for row in arr:
-    m = 0
-    n = 4
-    while n <= 20:
-        product = np.product(row[m:n])
-        if product > greatest_product:
-            greatest_product = product
-        else:
-            pass
-
-        m += 1
-        n += 1
+iter_horizontal(arr)
+iter_horizontal(arr_rot90)
+iter_diag(arr)
+iter_diag(arr_rot90)
 
 print(greatest_product)
 
-arr_rotated = np.rot90(arr,1,axes=(1,0)) # axes=(1,0) rotates clockwise, default rotates counterclockwise.
-
-for row in arr_rotated:
-    p = 0
-    q = 4
-    while q <= 20:
-        product2 = np.product(row[p:q])
-        if product2 > greatest_product:
-            greatest_product = product2
-        else:
-            pass
-
-        p += 1
-        q += 1
-
-print(greatest_product)
+#Answer is 70600674
